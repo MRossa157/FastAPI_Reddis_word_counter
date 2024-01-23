@@ -5,8 +5,8 @@ class RedisTools:
     __redis_connect = redis.Redis(host='redis', port=6379)
     
     @classmethod
-    def set_data(cls, title: str, x_avg_count_in_line: float):
-        cls.__redis_connect.set(title, x_avg_count_in_line)
+    def set_data(cls, title: str, text: str):
+        cls.__redis_connect.set(title, text)
         
     @classmethod
     def get_data(cls, title):
