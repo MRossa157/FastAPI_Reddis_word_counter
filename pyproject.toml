@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "fastapi-reddis-word-counter"
+version = "0.1.0"
+description = ""
+authors = ["MRossa <maxim.rossa@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["uvicorn"], version = "^0.109.0"}
+redis = "^5.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
