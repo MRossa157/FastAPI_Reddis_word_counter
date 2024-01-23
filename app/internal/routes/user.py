@@ -1,6 +1,8 @@
 import os
 from datetime import datetime
 
+from app.pkg.redds_tools.tools import RedisTools
+
 from fastapi import APIRouter
 from fastapi import File, UploadFile
 
@@ -16,31 +18,26 @@ def user_hello():
 @router.post('/load')
 def upload(file: UploadFile = File(...)):
     try:
-        os.mkdir("images")
-        print(os.getcwd())
-    except Exception as e:
-        print(e)
-        
-    file_name = os.getcwd()+"/images/"+file.filename.replace(" ", "-")
-    
-    try:
-        contents = file.file.read()
-        with open(file_name, 'wb') as f:
-            f.write(contents)
+        book_bytes = file.file.read()
     except Exception:
         return {
             "datetime": f"{datetime.now().strftime('%d.%m.%Y %H:%M:%S.%f')[:-3]}",
             "title": None,
             "text": None,
-            "status": "error",
-            "message": "There was an error uploading the file"
+            "error": "There was an error uploading the file"
         }
     finally:
         file.file.close()
-    # return {
-    #         "datetime": f"{datetime.now().strftime('%d.%m.%Y %H:%M:%S.%f')[:-3]}",
-    #         "title": None,
-    #         "text": None,
-    #     } 
+    
+    book_text = book_bytes.decode("utf-8")
+    book_title = file.filename
+    
+    RedisTools.set_data(book_title, book_text)
+    
+    return {
+            "datetime": f"{datetime.now().strftime('%d.%m.%Y %H:%M:%S.%f')[:-3]}",
+            "title": book_title,
+            "text": book_text,
+        }
         
     
