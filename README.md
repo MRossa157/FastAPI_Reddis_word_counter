@@ -15,13 +15,12 @@ provides an endpoint to get the result from the database in the form of [{"datet
 where x_avg_count_in_line is the average of the number of occurrences for each of the loaded texts
 
 ## Run application
-0. Install Poetry:
-   ```
-   pip install poetry
-   ```
-1.  Go to the ./app working directory and run ```poetry install```
-2.  Launch the application using the command
-   ```poetry run uvicorn app:create_app --host 0.0.0.0 --port 8000```
+0. Navigate to the ./app working directory
+1. Build a docker container:
+   ```docker-compose build```
+2. Run the assembled docker container:
+   ```docker-compose up -d```
+3. Access endpoints via **127.0.0.1:8000**
 ## Endpoints for interacting with the API
-- /api/v1/files
-- /api/v1/load
+- /api/v1/files - Get all files
+- /api/v1/load - Download the file. Params: *file = UploadFile*
