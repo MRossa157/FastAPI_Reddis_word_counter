@@ -14,13 +14,27 @@ provides an endpoint to get the result from the database in the form of [{"datet
 
 where x_avg_count_in_line is the average of the number of occurrences for each of the loaded texts
 
+## Requirements
+- Docker
+  - [docker-compose](https://docs.docker.com/compose/install/)
+
 ## Run application
-0. Navigate to the ./app working directory
 1. Build a docker container:
    ```docker-compose build```
 2. Run the assembled docker container:
    ```docker-compose up -d```
-3. Access endpoints via **127.0.0.1:8000**
-## Endpoints for interacting with the API
-- /api/v1/files - Get all files
-- /api/v1/load - Download the file. Params: *file = UploadFile*
+3. Navigate to the http://localhost:8000/docs and execute test API call.
+
+## Run application without Docker
+**Requirements/dependencies**
+- Python >= 3.10
+   - poetry
+- Redis instance
+> The Redis service can be started with docker-compose -f docker-compose-services.yml up
+
+**Install dependencies**
+Execute the following command: ```poetry install```
+
+**Run FastAPI app and Celery worker app**
+1. Start the FastAPI web application with ```poetry run hypercorn app:create_app --reload```.
+2. Navigate to the http://localhost:8000/docs and execute test API call.
